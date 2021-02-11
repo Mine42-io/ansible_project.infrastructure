@@ -1,0 +1,19 @@
+- src: https://github.com/Mine42-io/ansible_role.system_ansible
+  version: master
+  name: system_ansible
+
+- src: https://github.com/Mine42-io/ansible_role.system_fail2ban
+  version: master
+  name: system_fail2ban
+
+- src: https://github.com/jpclipffel/ansible_role.system_autoupdate
+  version: master
+  name: system_autoupdate
+
+- src: https://github.com/Mine42-io/ansible_role.proxmox_base
+  version: master
+  name: proxmox_base
+
+- src: https://github.com/Mine42-io/ansible_role.proxmox_templates
+  version: master
+  name: proxmox_templates

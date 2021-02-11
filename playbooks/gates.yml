@@ -1,0 +1,21 @@
+# code: language=Ansible insertSpaces=true tabSize=2
+#
+# Ansible playbook - `gates.yml`
+# Manages the infrastructure access gates lifecycle.
+
+- hosts:
+    - gates
+
+  tasks:
+
+    - include_role:
+        name: system_ansible
+      tags: [always, system_ansible]
+
+    - include_role:
+        name: system_fail2ban
+      tags: [always, system_fail2ban]
+
+    - include_role:
+        name: system_autoupdate
+      tags: [always, system_autoupdate]

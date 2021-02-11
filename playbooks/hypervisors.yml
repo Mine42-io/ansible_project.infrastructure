@@ -1,0 +1,38 @@
+# code: language=Ansible insertSpaces=true tabSize=2
+#
+# Ansible playbook - `hypervisors.yml`
+# Manages the hypervisors lifecycle.
+#
+# BUG: By default, Proxmox does not offers 'sudo' and using 'su'
+# is buggy when using an SSH key to login.
+#
+# Thus, initial setup requires to specify `ansible_become_method: su`
+# to let Ansible setup the host.
+
+
+- hosts:
+    - hypervisors
+
+  tasks:
+
+    - include_role:
+        name: system_ansible
+      tags: [always, system_ansible]
+
+    - include_role:
+        name: system_fail2ban
+      tags: [always, system_fail2ban]
+
+
+- hosts:
+    - proxmox
+
+  tasks:
+
+    - include_role:
+        name: proxmox_base
+      tags: [always, proxmox_base]
+
+    - include_role:
+        name: proxmox_templates
+      tags: [always, proxmox_templates]

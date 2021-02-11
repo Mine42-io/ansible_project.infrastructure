@@ -1,0 +1,9 @@
+# code: language=Ansible insertSpaces=true tabSize=2
+#
+# Ansible playbook - `home.yml`
+# Deploy and maintain home infrastructure.
+
+- hosts:
+    - nas
+  roles:
+    - docker_pihole
