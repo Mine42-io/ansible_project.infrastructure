@@ -35,3 +35,9 @@ Manages infrastructure access gates (jump hosts).
 ### Playbook - `home.yml`
 
 Manages homes infrastructure.
+
+Example run:
+
+```shell
+ansible-playbook playbooks/home.yml --tags setup
+```
