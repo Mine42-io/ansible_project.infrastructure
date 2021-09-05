@@ -33,6 +33,7 @@
         name: proxmox_base
       tags: [always, proxmox_base]
 
+    # Install Proxmox templates defined in `proxmox_templates`.
     - include_role:
         name: proxmox_templates
       tags: [always, proxmox_templates]

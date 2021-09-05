@@ -6,11 +6,20 @@
 - hosts:
     - gates
 
+  vars:
+    # Gates may be (re)created and theit host key will chnage.
+    # The role 'system_sshd' deploy the correct keys.
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
   tasks:
 
     - include_role:
         name: system_ansible
       tags: [always, system_ansible]
+
+    - include_role:
+        name: system_sshd
+      tags: [always, system_sshd]
 
     - include_role:
         name: system_fail2ban
