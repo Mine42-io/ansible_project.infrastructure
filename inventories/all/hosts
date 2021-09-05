@@ -1,0 +1,73 @@
+# code: language=Ansible
+
+all:
+
+  # Global variables
+  vars:
+    ansible_user: ansctl
+    ansible_become: yes
+    ansible_become_user: root
+    ansible_private_key_file: "~/.ssh/ansctl-mine42.rsa"
+    ansible_public_key_file: "~/.ssh/ansctl-mine42.rsa.pub"
+    ansible_python_interpreter: auto
+
+  # Individual hosts
+  # Hosts groups are defined in the following `children` group.
+  hosts:
+
+    # NAS
+    nas-01.mine42.com:
+      ansible_host: 10.1.1.1
+      ansible_user: admin
+      ansible_become: no
+      ansible_python_interpreter: /share/CACHEDEV1_DATA/.qpkg/Python3/python3/bin/python3
+      docker_pihole_service_volume: /share/Container/PiHole
+    
+    # NAS
+    nas-02.mine42.com:
+      ansible_host: 10.2.1.1
+      ansible_python_interpreter: /usr/local/bin/python3
+      docker_pihole_service_volume: /volume1/docker/pihole
+
+    # Proxmox server∏
+    proxmox-01.mine42.com:
+      # ansible_become_method: su # Only for first login
+      system_fail2ban_jails: [sshd, proxmox]
+      system_fail2ban_filters: [proxmox]
+      proxmox_templates:
+        - id: 9000
+          name: "ubuntu-20.04-cloudinit"
+          image: "focal-server-cloudimg-amd64.img"
+          image_url: "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
+    
+    # Proxmox virtual infrastructure access gate
+    gate.mine42.com:
+      system_fail2ban_jails: [sshd]
+      system_sshd_hostkeys:
+        - file: "~/.ssh/gate.mine42.com.rsa"
+          name: "ssh_host_rsa_key"
+    
+    # Azure cloud infrastructure access gate
+    gate.azure.mine42.com:
+      system_fail2ban_jails: [sshd]
+      system_sshd_hostkeys: []
+
+
+  # Hosts groups
+  children:
+
+    nas:
+      hosts:
+        nas-01.mine42.com:
+        nas-02.mine42.com:
+
+    hypervisors:
+      children:
+        proxmox:
+          hosts:
+            proxmox-01.mine42.com:
+
+    gates:
+      hosts:
+        gate.mine42.com:
+        gate.azure.mine42.com:
