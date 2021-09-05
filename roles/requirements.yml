@@ -2,6 +2,10 @@
   version: master
   name: system_ansible
 
+- src: https://github.com/Mine42-io/ansible_role.system_sshd
+  version: master
+  name: system_sshd
+
 - src: https://github.com/Mine42-io/ansible_role.system_fail2ban
   version: master
   name: system_fail2ban
@@ -17,3 +21,7 @@
 - src: https://github.com/Mine42-io/ansible_role.proxmox_templates
   version: master
   name: proxmox_templates
+
+- src: https://github.com/Mine42-io/ansible_role.docker_pihole
+  version: master
+  name: docker_pihole
